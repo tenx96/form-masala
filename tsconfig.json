@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": false,
+    "module": "esnext",
+    "target": "es6",
+    "allowJs": true,
+    "jsx" : "react",
+    "moduleResolution": "node",
+    "sourceMap":  true,
+    "esModuleInterop": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*" : ["./src/*"],
+    }
+  },
+  "files": ["src/index.tsx"],
+  "include": ["**/*.tsx", "**/*.ts", "src/components/Form/Form.stories.tsxasdasd"]
+}
