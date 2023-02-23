@@ -33,7 +33,6 @@ const useFormManager = <Values extends FormValues>(
   };
   // set touched value to true|false for particular
   const setFieldTouched = (name: string, touched: boolean) => {
-    validateField(name);
     setTouched((touchedRecord) => {
       return { ...touchedRecord, [name]: touched };
     });
@@ -41,7 +40,7 @@ const useFormManager = <Values extends FormValues>(
 
   // sets the value to the values state
   const setFieldValue = (name: string, value: any) => {
-    validateField(name);
+    validateField(name, value);
     setValues((values) => {
       return { ...values, [name]: value };
     });
@@ -54,18 +53,19 @@ const useFormManager = <Values extends FormValues>(
   };
 
   // validate a field an update the error map
-  const validateField = (name: string) => {
+  const validateField = (name: string, value?: any) => {
+    let val = value != undefined ? value : values[name];
     if (validators && validators[name]) {
-      const error = validators[name](values[name]);
+      const error = validators[name](val);
       if (error) {
         // set error obj if isvalid
         setErrors((err) => ({ ...err, [name]: error }));
       } else {
         // remove error if valid
         setErrors((err) => {
-          const draft = err;
-          delete draft[name];
-          return draft;
+          const errDraft = err;
+          delete errDraft[name];
+          return errDraft;
         });
       }
       return error;
@@ -78,10 +78,11 @@ const useFormManager = <Values extends FormValues>(
     if (validators) {
       const draftErrors = errors;
       Object.keys(validators || {}).forEach((name) => {
-        if (validators[name]) {
+        if (validators && validators[name]) {
           const error = validators[name](values[name]);
           if (error) {
             draftErrors[name] = error;
+            setFieldTouched(name, true);
           } else {
             delete draftErrors[name];
           }
@@ -135,7 +136,8 @@ const useFormManager = <Values extends FormValues>(
 
   // submit form if valid
   const submitForm = () => {
-    if (isValid && !isSubmitting && !isValidating) {
+    const valid = Object.keys(validateForm() || {}).length === 0;
+    if (valid && !isSubmitting && !isValidating) {
       setIsSubmitting(true);
       if (formProps.onSubmit) {
         formProps.onSubmit(values, { ...formInstance, submitForm });

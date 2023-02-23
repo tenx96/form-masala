@@ -28,7 +28,7 @@ const FormInput = (
 
   return (
     <FormField {...props}>
-      <Input {...inputProps} onChange={onChange} onBlur={onBlur}>
+      <Input value={field.value} {...inputProps} onChange={onChange} onBlur={onBlur}>
         {children}
       </Input>
     </FormField>

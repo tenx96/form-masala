@@ -1,9 +1,8 @@
 import { Label, Text } from "@innovaccer/design-system";
-import { useEffect } from "react";
+import React, { useEffect } from 'react';
 import { FormFieldProps, FormValues } from "./FormTypes";
 import useForm from "./hooks/useForm";
 import useFormField from "./hooks/useFormField";
-import React from 'react'
 function FormField<Values extends FormValues>(
   formFieldProps: FormFieldProps<Values>
 ) {
@@ -35,11 +34,10 @@ function FormField<Values extends FormValues>(
     <>
       {offset && <div className={`form-field--span-${offset}`} />}
       <div
-        className={`form-field form-field--vertical ${
-          span ? `form-field--span-${span}` : ""
-        }`}
+        className={`form-field form-field--vertical ${span ? `form-field--span-${span}` : ""
+          }`}
       >
-        {label && <Label required>{label}</Label>}
+        {label && <Label >{label}</Label>}
         {renderChildren()}{" "}
         {field.error && (
           <Text appearance="destructive" size="small">
