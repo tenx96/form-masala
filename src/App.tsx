@@ -1,5 +1,5 @@
 import { Button, Text } from "@innovaccer/design-system";
-import React, { useRef } from "react";
+import React, { useRef , Fragment } from "react";
 import Form, { FormInstance } from "./components/Form";
 const App = () => {
   const ref = useRef<FormInstance<any>>(null);
@@ -23,7 +23,7 @@ const App = () => {
         }}
       >
         {(form) => (
-          <>
+          <Fragment>
             <Form.Input span={12} name="email" label="Email" type="text" />
             <Form.Input
               offset={12}
@@ -68,7 +68,7 @@ const App = () => {
                 {`isSubmitting : ${form.isSubmitting}`} <br />
               </div>
             </div>
-          </>
+          </Fragment>
         )}
       </Form>
 
