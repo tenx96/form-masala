@@ -41,16 +41,6 @@ const App = () => {
               name="field1"
               label="Field1"
             />
-            <Form.Input
-              span={8}
-              name="field2"
-              label="Field2"
-            />
-            <Form.Input
-              span={8}
-              name="field3"
-              label="Field3"
-            />
             <Form.Dropdown
               label="Colors"
               name="color"
