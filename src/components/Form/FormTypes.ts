@@ -1,4 +1,4 @@
-import { RefObject } from "react";
+import { ColumnProps } from "@innovaccer/design-system";
 
 export type FormValues = Record<string, any>;
 
@@ -37,7 +37,7 @@ export type TouchedMap<Values extends FormValues = any> = Record<
 >;
 export interface FormProps<Values extends FormValues> {
   initialValues: Values;
-  onSubmit?: (values: Values , instance : FormInstance<Values>) => void;
+  onSubmit?: (values: Values, instance: FormInstance<Values>) => void;
   validators?: FieldValidatorFactory<Values>;
   children?:
     | ((form: FormInstance<Values>) => React.ReactNode)
@@ -60,8 +60,8 @@ export interface FormFieldProps<Values extends FormValues> {
   name: string;
   label?: string;
   required?: boolean;
-  offset?: number,
-  span?: number,
+  columnProps?: ColumnProps;
+  offsetProps?: ColumnProps;
   validator?: FieldValidator;
   children?:
     | ((props: {
