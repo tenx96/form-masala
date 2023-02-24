@@ -1,12 +1,12 @@
-import { Label, Text } from "@innovaccer/design-system";
-import React, { useEffect } from 'react';
+import { Caption, Column, Label } from "@innovaccer/design-system";
+import { useEffect } from 'react';
 import { FormFieldProps, FormValues } from "./FormTypes";
 import useForm from "./hooks/useForm";
 import useFormField from "./hooks/useFormField";
 function FormField<Values extends FormValues>(
   formFieldProps: FormFieldProps<Values>
 ) {
-  const { children, name, validator, label, required, offset, span } =
+  const { children, name, validator, label, required, columnProps, offsetProps } =
     formFieldProps;
   const form = useForm();
   const field = useFormField({ name });
@@ -32,19 +32,16 @@ function FormField<Values extends FormValues>(
 
   return (
     <>
-      {offset && <div className={`form-field--span-${offset}`} />}
-      <div
-        className={`form-field form-field--vertical ${span ? `form-field--span-${span}` : ""
-          }`}
-      >
+      {offsetProps && <Column {...offsetProps} />}
+      <Column className="pb-4 pr-4" size={12}  {...columnProps}>
         {label && <Label >{label}</Label>}
         {renderChildren()}{" "}
         {field.error && (
-          <Text appearance="destructive" size="small">
+          <Caption className="mt-4" error>
             {field.error}
-          </Text>
+          </Caption>
         )}
-      </div>
+      </Column>
     </>
   );
 }

@@ -1,3 +1,4 @@
+import { Row } from "@innovaccer/design-system";
 import React, { ReactElement, RefObject, useImperativeHandle } from "react";
 import { FormInstance, FormProps, FormValues } from "./FormTypes";
 import useFormManager from "./hooks/useFormManager";
@@ -34,7 +35,9 @@ const Form = React.forwardRef(function Form<Values extends FormValues>(
           form.resetForm();
         }}
       >
-        {renderChildren()}
+        <Row css>
+          {renderChildren()}
+        </Row>
       </form>
     </FormContext.Provider>
   );
