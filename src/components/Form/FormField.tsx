@@ -1,8 +1,9 @@
 import { Caption, Column, Label } from "@innovaccer/design-system";
 import { useEffect } from 'react';
-import { FormFieldProps, FormValues } from "./FormTypes";
+import { FormFieldInstance, FormFieldProps, FormInstance, FormValues } from "./FormTypes";
 import useForm from "./hooks/useForm";
 import useFormField from "./hooks/useFormField";
+import renderChildrenFunction from "./utils/renderChildrenFunction";
 function FormField<Values extends FormValues>(
   formFieldProps: FormFieldProps<Values>
 ) {
@@ -22,20 +23,17 @@ function FormField<Values extends FormValues>(
     };
   }, []);
 
-  const renderChildren = () => {
-    if (typeof children === "function") {
-      return children({ form, field });
-    } else {
-      return children;
-    }
-  };
+
 
   return (
     <>
       {offsetProps && <Column {...offsetProps} />}
       <Column className="pb-4 pr-4" size={12}  {...columnProps}>
-        {label && <Label >{label}</Label>}
-        {renderChildren()}{" "}
+        {label && <Label required={required}>{label}</Label>}
+        {renderChildrenFunction<{
+          field: FormFieldInstance,
+          form: FormInstance<Values>;
+        }>(children, { field, form })}
         {field.error && (
           <Caption className="mt-4" error>
             {field.error}

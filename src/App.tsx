@@ -35,11 +35,17 @@ const App = () => {
                 {(form) => (
                   <Fragment>
                     <Form.Input
+                      columnProps={{
+                        size: 8
+                      }}
                       name="email"
                       label="Email"
                       type="text"
                     />
                     <Form.Input
+                      columnProps={{
+                        size: 8
+                      }}
                       validator={(val) =>
                         !val ? "is required" : val.length < 5 ? "min 5 " : ""
                       }
@@ -59,7 +65,7 @@ const App = () => {
                     <Form.Input
                       columnProps={{
                         size: "6",
-                        sizeM: "12",
+                        sizeM: "12", // size will increase with smaller screen size
                       }}
                       name="field2"
                       label="Field2"
@@ -85,15 +91,7 @@ const App = () => {
                     />
 
                     <Column className="pb-6" size="12">
-                      {/* Button inside Form context can set type as 'submit' to initiate submit */}
-                      <Button
-                        disabled={!form.isValid}
-                        loading={form.isSubmitting}
-                        appearance="primary"
-                        type="submit"
-                      >
-                        Submit
-                      </Button>
+                      <Form.SubmitButton appearance="primary" /> {/**fancy submit button */}
                     </Column>
 
                     <Column size="12">

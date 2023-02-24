@@ -8,12 +8,13 @@ import {
   FormValues,
   TouchedMap,
 } from "../FormTypes";
+import isNullable from "../utils/isNullable";
 
 const useFormManager = <Values extends FormValues>(
   formProps: FormProps<Values>
 ): FormInstance<Values> => {
   // PROPS
-  const [validators, setValidators] = useState<FieldValidatorFactory<any>>({});
+  const [validators, setValidators] = useState<FieldValidatorFactory<any>>(formProps.validators || {});
 
   // STATES
   const [errors, setErrors] = useState<ErrorMap>({});
@@ -56,7 +57,7 @@ const useFormManager = <Values extends FormValues>(
 
   // validate a field an update the error map
   const validateField = (name: string, value?: any) => {
-    let val = value != undefined ? value : values[name];
+    let val = !isNullable(value) ? value : values[name];
     if (validators && validators[name]) {
       const error = validators[name](val);
       if (error) {

@@ -3,6 +3,7 @@ import React, { ReactElement, RefObject, useImperativeHandle } from "react";
 import { FormInstance, FormProps, FormValues } from "./FormTypes";
 import useFormManager from "./hooks/useFormManager";
 import "./style.css";
+import renderChildrenFunction from "./utils/renderChildrenFunction";
 export const FormContext = React.createContext<FormInstance<any>>({} as any);
 const Form = React.forwardRef(function Form<Values extends FormValues>(
   props: FormProps<Values>,
@@ -15,17 +16,12 @@ const Form = React.forwardRef(function Form<Values extends FormValues>(
   // return instance through ref
   useImperativeHandle(ref, () => form);
 
-  const renderChildren = () => {
-    if (typeof children === "function") {
-      return children(form);
-    } else {
-      return children;
-    }
-  };
+
 
   return (
     <FormContext.Provider value={form}>
       <form
+        autoComplete="on"
         className="form-container"
         onSubmit={(e) => {
           e.preventDefault();
@@ -36,7 +32,7 @@ const Form = React.forwardRef(function Form<Values extends FormValues>(
         }}
       >
         <Row css>
-          {renderChildren()}
+          {renderChildrenFunction<FormInstance<Values>>(children, form)}
         </Row>
       </form>
     </FormContext.Provider>
